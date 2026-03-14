@@ -6,20 +6,40 @@ let lng = 0;
 const API_URL = "https://script.google.com/macros/s/AKfycbw4xD2FCUwBRQVORa-EChiCcA2R5O5sm6vS1_0dOehUPGpQV1-F66vVmjfgllbRaLbO/exec"; // <-- replace with your actual URL
 
 // Sidebar toggle
+function isMenuOpen() {
+  return document.getElementById("menu").classList.contains("open");
+}
+
+function openMenu() {
+  const menu = document.getElementById("menu");
+  const menuBtn = document.getElementById("menuBtn");
+  menu.classList.add("open");
+  menu.setAttribute("aria-hidden", "false");
+  menuBtn?.setAttribute("aria-expanded", "true");
+}
+
+function closeMenu() {
+  const menu = document.getElementById("menu");
+  const menuBtn = document.getElementById("menuBtn");
+  menu.classList.remove("open");
+  menu.setAttribute("aria-hidden", "true");
+  menuBtn?.setAttribute("aria-expanded", "false");
+}
+
 function toggleMenu() {
-  let menu = document.getElementById("menu");
-  if (menu.style.left === "0px") {
-    menu.style.left = "-220px";
-  } else {
-    menu.style.left = "0px";
+  if (isMenuOpen()) {
+    closeMenu();
+    return;
   }
+
+  openMenu();
 }
 
 // Show specific page/section
 function showPage(page) {
   document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
   document.getElementById(page).classList.add("active");
-  toggleMenu();
+  closeMenu();
 
   if (page === "submit") {
     setTimeout(loadMap, 300);
@@ -80,6 +100,26 @@ async function detectLocation() {
 
 // Photo preview
 document.addEventListener("DOMContentLoaded", () => {
+  const menu = document.getElementById("menu");
+  const menuBtn = document.getElementById("menuBtn");
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!isMenuOpen()) return;
+
+    const clickInsideSidebar = menu.contains(event.target);
+    const clickMenuToggle = menuBtn?.contains(event.target);
+
+    if (!clickInsideSidebar && !clickMenuToggle) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isMenuOpen()) {
+      closeMenu();
+    }
+  });
+
   let photoInput = document.getElementById("photo");
   let preview = document.getElementById("photoPreview");
 
