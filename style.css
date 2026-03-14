@@ -24,6 +24,10 @@ header h2 {
   font-size: 26px;
   cursor: pointer;
   margin-right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0;
 }
 
 /* ===== Sidebar ===== */
@@ -34,9 +38,13 @@ header h2 {
   width: 220px;
   height: 100%;
   background: #001f3f;
-  transition: 0.3s;
+  transition: left 0.3s;
   padding-top: 60px;
   z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0;
 }
 
 .sidebar button {
@@ -49,6 +57,15 @@ header h2 {
   cursor: pointer;
   text-align: left;
   font-size: 16px;
+}
+
+.sidebar .closeSidebarBtn {
+  width: auto;
+  margin: 0 10px 10px auto;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 8px 12px;
+  text-align: center;
 }
 
 .sidebar button:hover {

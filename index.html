@@ -13,11 +13,12 @@
 <body>
 
 <header>
-  <span class="menuBtn" onclick="toggleMenu()">☰</span>
+  <button class="menuBtn" id="menuBtn" type="button" aria-controls="menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
   <h2>RoadWatch PH</h2>
 </header>
 
-<div class="sidebar" id="menu">
+<div class="sidebar" id="menu" aria-hidden="true">
+  <button class="closeSidebarBtn" type="button" onclick="closeMenu()" aria-label="Close sidebar">✕</button>
   <button onclick="showPage('home')">Home</button>
   <button onclick="showPage('submit')">Submit Report</button>
 </div>
