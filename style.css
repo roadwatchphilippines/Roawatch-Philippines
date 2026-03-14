@@ -119,6 +119,12 @@ section.active {
   padding: 34px;
 }
 
+.highlighted-hero {
+  margin-bottom: 24px;
+  border: 1px solid rgba(128, 199, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(102, 178, 255, 0.25), 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
 .hero-card {
   text-align: center;
   margin-bottom: 24px;
@@ -181,13 +187,21 @@ section.active {
 
 .home-top-grid {
   display: grid;
-  grid-template-columns: 2.25fr 1fr;
+  grid-template-columns: 1.3fr 1fr;
   gap: 22px;
   margin-bottom: 30px;
 }
 
+.report-focus-card {
+  border: 1px solid rgba(134, 208, 255, 0.48);
+  background: linear-gradient(180deg, rgba(10, 45, 77, 0.94), rgba(9, 34, 61, 0.93));
+}
+
 .home-info h3 {
   margin-top: 0;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 1.45rem;
+  color: #e5f3ff;
 }
 
 .home-info ul {
@@ -201,6 +215,24 @@ section.active {
   margin: 0;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.quick-guide h3 {
+  margin-top: 0;
+  font-family: "Poppins", "Inter", sans-serif;
+}
+
+.quick-guide ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.quick-guide p {
+  margin: 12px 0 0;
+  color: #9fdbff;
+  font-weight: 600;
 }
 
 .issues-wrap h3 {
