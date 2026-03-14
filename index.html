@@ -24,9 +24,46 @@
 
 <!-- HOME -->
 <section id="home" class="active">
-  <div class="card">
+  <div class="hero card">
+    <p class="eyebrow">Community-powered road safety</p>
     <h2>Welcome to RoadWatch PH</h2>
-    <p>Report potholes, cracks, flooding, and road hazards.</p>
+    <p class="heroText">Help keep Philippine roads safer by reporting potholes, cracks, flooding, and other hazards in seconds.</p>
+    <div class="heroActions">
+      <button class="submitBtn" onclick="showPage('submit')">Report an Issue</button>
+      <button class="ghostBtn" onclick="scrollToHowItWorks()">How It Works</button>
+    </div>
+    <div class="stats">
+      <div class="statCard">
+        <span id="reportCount">--</span>
+        <small>Total reports logged</small>
+      </div>
+      <div class="statCard">
+        <span id="mappedCount">--</span>
+        <small>Reports with map pins</small>
+      </div>
+      <div class="statCard">
+        <span id="resolvedCount">--</span>
+        <small>Marked as resolved</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="howItWorks">
+    <h3>How RoadWatch PH works</h3>
+    <div class="featureGrid">
+      <article>
+        <h4>1) Share the location</h4>
+        <p>Type the road name or let GPS auto-detect your position.</p>
+      </article>
+      <article>
+        <h4>2) Describe the issue</h4>
+        <p>Add useful details and upload a photo to make your report clearer.</p>
+      </article>
+      <article>
+        <h4>3) Track your report</h4>
+        <p>Receive a tracking number after submission for easy follow-up.</p>
+      </article>
+    </div>
   </div>
 </section>
 
