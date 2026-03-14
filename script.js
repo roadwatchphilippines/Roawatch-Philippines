@@ -7,12 +7,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbw4xD2FCUwBRQVORa-EChiC
 
 // Sidebar toggle
 function isMenuOpen() {
-  return document.getElementById("menu").classList.contains("open");
+  return document.getElementById("menu")?.classList.contains("open") || false;
 }
 
 function openMenu() {
   const menu = document.getElementById("menu");
   const menuBtn = document.getElementById("menuBtn");
+  if (!menu) return;
   menu.classList.add("open");
   menu.setAttribute("aria-hidden", "false");
   menuBtn?.setAttribute("aria-expanded", "true");
@@ -21,6 +22,7 @@ function openMenu() {
 function closeMenu() {
   const menu = document.getElementById("menu");
   const menuBtn = document.getElementById("menuBtn");
+  if (!menu) return;
   menu.classList.remove("open");
   menu.setAttribute("aria-hidden", "true");
   menuBtn?.setAttribute("aria-expanded", "false");
@@ -38,7 +40,9 @@ function toggleMenu() {
 // Show specific page/section
 function showPage(page) {
   document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-  document.getElementById(page).classList.add("active");
+  const selectedPage = document.getElementById(page);
+  if (!selectedPage) return;
+  selectedPage.classList.add("active");
   closeMenu();
 
   if (page === "submit") {
@@ -75,6 +79,10 @@ async function detectLocation() {
     return;
   }
 
+  if (!map) {
+    loadMap();
+  }
+
   navigator.geolocation.getCurrentPosition(async function (pos) {
     lat = pos.coords.latitude;
     lng = pos.coords.longitude;
@@ -91,10 +99,15 @@ async function detectLocation() {
       let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
       let data = await response.json();
       let road = data.address?.road || data.display_name;
-      document.getElementById("locationText").value = road || "";
+      const locationInput = document.getElementById("locationText");
+      if (locationInput) {
+        locationInput.value = road || "";
+      }
     } catch (error) {
       console.log("Reverse geocoding failed", error);
     }
+  }, function () {
+    alert("Unable to detect location. Please allow GPS permission or place a pin manually.");
   });
 }
 
@@ -123,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("pointerdown", (event) => {
     if (!isMenuOpen()) return;
 
-    const clickInsideSidebar = menu.contains(event.target);
+    const clickInsideSidebar = menu?.contains(event.target);
     const clickMenuToggle = menuBtn?.contains(event.target);
 
     if (!clickInsideSidebar && !clickMenuToggle) {
@@ -137,19 +150,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  let photoInput = document.getElementById("photo");
-  let preview = document.getElementById("photoPreview");
+  const photoInput = document.getElementById("photo");
+  const preview = document.getElementById("photoPreview");
 
-  photoInput.addEventListener("change", function () {
-    let file = this.files[0];
-    if (!file) return;
-    let reader = new FileReader();
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-      preview.style.display = "block";
-    };
-    reader.readAsDataURL(file);
-  });
+  if (photoInput && preview) {
+    photoInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 
   const liveStatus = document.getElementById("liveStatus");
   const statuses = [
@@ -246,7 +261,6 @@ async function loadReports() {
     console.log("Error loading reports", err);
   }
 }
-
 
 
 
