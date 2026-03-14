@@ -82,7 +82,7 @@ header h2 {
 
 .sidebar .closeSidebarBtn {
   width: auto;
-  margin: 0 10px 10px auto;
+  margin: 0 0 10px 10px;
   font-size: 22px;
   padding: 8px 12px;
   text-align: center;
@@ -143,6 +143,32 @@ section.active {
   margin: 16px auto 0;
   color: var(--muted);
   line-height: 1.7;
+}
+
+
+
+.home-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.home-info h3 {
+  margin-top: 0;
+}
+
+.home-info ul {
+  margin: 0 0 12px;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.home-info p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .issues-wrap h3 {
@@ -308,6 +334,12 @@ textarea {
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .home-top-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
