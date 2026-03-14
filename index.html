@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoadWatch PH</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+<body>
+
+<header>
+  <span class="menuBtn" onclick="toggleMenu()">☰</span>
+  <h2>RoadWatch PH</h2>
+</header>
+
+<div class="sidebar" id="menu">
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('submit')">Submit Report</button>
+</div>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="card">
+    <h2>Welcome to RoadWatch PH</h2>
+    <p>Report potholes, cracks, flooding, and road hazards.</p>
+  </div>
+</section>
+
+<!-- SUBMIT REPORT -->
+<section id="submit">
+  <div class="card">
+    <h2>Submit Road Issue</h2>
+
+    <h3>Reporter Information</h3>
+    <div class="row">
+      <input id="lastname" placeholder="Last Name">
+      <input id="firstname" placeholder="First Name">
+      <input id="mi" placeholder="M.I.">
+    </div>
+
+    <div class="row">
+      <input id="email" placeholder="Email">
+      <input id="phone" placeholder="Mobile Number">
+    </div>
+
+    <h3>Road Location</h3>
+    <input id="locationText" placeholder="Street / Road Name (Type or Auto-detect)" />
+    <button class="detectBtn" onclick="detectLocation()">Auto-detect My Location</button>
+
+    <h3>Select Location</h3>
+    <div id="reportMap"></div>
+    <p id="selectedLocation">No location selected</p>
+
+    <h3>Road Issue</h3>
+    <textarea id="issue" placeholder="Describe the issue"></textarea>
+
+    <h3>Upload Photo</h3>
+    <input type="file" id="photo">
+    <img id="photoPreview">
+
+    <button class="submitBtn" onclick="submitReport()">Submit Report</button>
+  </div>
+</section>
+
+<!-- POPUP -->
+<div id="popup">
+  <div class="popup-card">
+    <h3>Report Submitted Successfully!</h3>
+    <p id="trackInfo" style="font-weight:bold; font-size:18px; margin:15px 0;"></p>
+    <div style="display:flex; justify-content:space-between; gap:15px; margin-top:10px;">
+      <button class="submit" onclick="closePopup()" style="flex:1;">Done</button>
+      <button class="submit" onclick="newReport()" style="flex:1;">Submit Another</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

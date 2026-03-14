@@ -1,0 +1,206 @@
+/* ===== General ===== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #0a2540;
+  color: white;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background: #001f3f;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h2 {
+  margin: 0;
+}
+
+.menuBtn {
+  font-size: 26px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  left: -220px;
+  top: 0;
+  width: 220px;
+  height: 100%;
+  background: #001f3f;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+}
+
+.sidebar button:hover {
+  background: #003566;
+}
+
+/* ===== Sections ===== */
+section {
+  display: none;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+section.active {
+  display: block;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #001d3d;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.card h2, .card h3 {
+  margin-top: 0;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.row input {
+  flex: 1;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #00d4ff;
+  background: #002855;
+  color: white;
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.detectBtn, .submitBtn {
+  margin-top: 10px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.detectBtn {
+  background: #0077b6;
+  color: white;
+}
+
+.detectBtn:hover {
+  background: #005f86;
+}
+
+.submitBtn {
+  background: #00f5d4;
+  color: #011f4b;
+}
+
+.submitBtn:hover {
+  background: #00b4d8;
+  color: white;
+  transform: scale(1.02);
+}
+
+/* ===== Map ===== */
+#reportMap {
+  height: 300px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+/* ===== Photo Preview ===== */
+#photoPreview {
+  display: none;
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* ===== Popup Overlay ===== */
+#popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-card {
+  background: rgba(255, 255, 255, 0.95);
+  color: #011f4b;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transform: translateY(-20px);
+  transition: transform 0.4s ease;
+}
+
+#popup.show .popup-card {
+  transform: translateY(0);
+}
+
+#popup button {
+  background: #00f5d4;
+  border: none;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+#popup button:hover {
+  background: #00b4d8;
+  color: white;
+  transform: scale(1.05);
+}

@@ -1,0 +1,21 @@
+document.getElementById("trackInfo").innerText = "Tracking Number: " + tracking;
+      document.getElementById("popup").classList.add("show"); // use class for fade-in
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Submission failed. Check your API or internet connection.");
+    });
+}
+
+// Hide popup
+function closePopup() {
+  document.getElementById("popup").classList.remove("show");
+  showPage('home');
+  resetForm();
+}
+
+function newReport() {
+  document.getElementById("popup").classList.remove("show");
+  resetForm();
+  showPage('submit');
+}
