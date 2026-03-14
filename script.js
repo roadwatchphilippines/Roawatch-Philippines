@@ -6,13 +6,33 @@ let lng = 0;
 const API_URL = "https://script.google.com/macros/s/AKfycbw4xD2FCUwBRQVORa-EChiCcA2R5O5sm6vS1_0dOehUPGpQV1-F66vVmjfgllbRaLbO/exec"; // <-- replace with your actual URL
 
 // Sidebar toggle
-function toggleMenu() {
+function isMenuOpen() {
+  return document.getElementById("menu").classList.contains("open");
+}
+
+function openMenu() {
   const menu = document.getElementById("menu");
-  menu.style.left = menu.style.left === "0px" ? "-220px" : "0px";
+  const menuBtn = document.getElementById("menuBtn");
+  menu.classList.add("open");
+  menu.setAttribute("aria-hidden", "false");
+  menuBtn?.setAttribute("aria-expanded", "true");
 }
 
 function closeMenu() {
-  document.getElementById("menu").style.left = "-220px";
+  const menu = document.getElementById("menu");
+  const menuBtn = document.getElementById("menuBtn");
+  menu.classList.remove("open");
+  menu.setAttribute("aria-hidden", "true");
+  menuBtn?.setAttribute("aria-expanded", "false");
+}
+
+function toggleMenu() {
+  if (isMenuOpen()) {
+    closeMenu();
+    return;
+  }
+
+  openMenu();
 }
 
 // Show specific page/section
@@ -26,40 +46,13 @@ function showPage(page) {
   }
 }
 
-function scrollToHowItWorks() {
-  const section = document.getElementById("howItWorks");
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-
-async function loadHomepageStats() {
-  try {
-    const response = await fetch(API_URL);
-    const reports = await response.json();
-
-    const total = reports.length;
-    const mapped = reports.filter(r => r.lat && r.lng).length;
-    const resolved = reports.filter(r => (r.status || "").toLowerCase() === "resolved").length;
-
-    document.getElementById("reportCount").textContent = total.toLocaleString();
-    document.getElementById("mappedCount").textContent = mapped.toLocaleString();
-    document.getElementById("resolvedCount").textContent = resolved.toLocaleString();
-  } catch (error) {
-    console.log("Failed to load homepage stats", error);
-    ["reportCount", "mappedCount", "resolvedCount"].forEach(id => {
-      document.getElementById(id).textContent = "N/A";
-    });
-  }
-}
-
 // Initialize the map
 function loadMap() {
   if (map) return;
 
-  map = L.map("reportMap").setView([14.5995, 120.9842], 13);
+  map = L.map('reportMap').setView([14.5995, 120.9842], 13);
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
 
   map.on("click", function (e) {
     lat = e.latlng.lat;
@@ -107,9 +100,28 @@ async function detectLocation() {
 
 // Photo preview
 document.addEventListener("DOMContentLoaded", () => {
+  const menu = document.getElementById("menu");
+  const menuBtn = document.getElementById("menuBtn");
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!isMenuOpen()) return;
+
+    const clickInsideSidebar = menu.contains(event.target);
+    const clickMenuToggle = menuBtn?.contains(event.target);
+
+    if (!clickInsideSidebar && !clickMenuToggle) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isMenuOpen()) {
+      closeMenu();
+    }
+  });
+
   let photoInput = document.getElementById("photo");
   let preview = document.getElementById("photoPreview");
-  loadHomepageStats();
 
   photoInput.addEventListener("change", function () {
     let file = this.files[0];
@@ -152,10 +164,10 @@ function submitReport() {
     body: formData
   })
     .then(res => res.text())
-    .then(() => {
-      document.getElementById("trackInfo").innerText = "Tracking Number: " + tracking;
-      document.getElementById("popup").classList.add("show");
-      loadHomepageStats();
+    .then(res => {
+      // Show the popup correctly
+document.getElementById("trackInfo").innerText = "Tracking Number: " + tracking;
+      document.getElementById("popup").classList.add("show"); // use class for fade-in
     })
     .catch(err => {
       console.error(err);
@@ -166,19 +178,18 @@ function submitReport() {
 // Hide popup
 function closePopup() {
   document.getElementById("popup").classList.remove("show");
-  showPage("home");
+  showPage('home');
   resetForm();
 }
 
 function newReport() {
   document.getElementById("popup").classList.remove("show");
   resetForm();
-  showPage("submit");
+  showPage('submit');
 }
-
 // Reset the form
 function resetForm() {
-  document.querySelectorAll("#submit input,#submit textarea").forEach(el => (el.value = ""));
+  document.querySelectorAll("#submit input,#submit textarea").forEach(el => el.value = "");
   document.getElementById("selectedLocation").innerText = "No location selected";
   lat = 0;
   lng = 0;
@@ -203,3 +214,8 @@ async function loadReports() {
     console.log("Error loading reports", err);
   }
 }
+
+
+
+
+
