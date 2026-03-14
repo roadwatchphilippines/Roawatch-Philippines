@@ -168,6 +168,7 @@ section {
 
 section.active {
   display: block;
+  animation: sectionFadeIn 0.45s ease;
 }
 
 #home.active {
@@ -181,6 +182,14 @@ section.active {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
   border-radius: 22px;
   padding: 34px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.card:hover,
+.hero-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(166, 220, 255, 0.45);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.52);
 }
 
 .highlighted-hero {
@@ -195,6 +204,19 @@ section.active {
   background: linear-gradient(160deg, rgba(8, 37, 67, 0.92), rgba(8, 25, 49, 0.88));
   position: relative;
   overflow: hidden;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  width: 32%;
+  height: 180%;
+  top: -40%;
+  left: -42%;
+  background: linear-gradient(115deg, transparent 0%, rgba(173, 229, 255, 0.18) 48%, transparent 100%);
+  transform: rotate(8deg);
+  animation: heroSweep 7s linear infinite;
+  pointer-events: none;
 }
 
 .hero-card::after {
@@ -405,6 +427,7 @@ section.active {
   border: 1px solid rgba(178, 213, 255, 0.15);
   border-radius: 14px;
   overflow: hidden;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
 .issue-card a {
@@ -437,6 +460,12 @@ section.active {
 
 .issue-card:hover img {
   transform: scale(1.03);
+}
+
+.issue-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(162, 217, 255, 0.4);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.42);
 }
 
 .issue-card div {
@@ -502,6 +531,24 @@ textarea {
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.detectBtn::after,
+.submitBtn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(95deg, transparent 0%, rgba(255, 255, 255, 0.38) 50%, transparent 100%);
+}
+
+.detectBtn:hover::after,
+.submitBtn:hover::after {
+  animation: btnShimmer 0.7s ease;
 }
 
 .detectBtn {
@@ -580,6 +627,59 @@ textarea {
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.reveal-target {
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition: opacity 0.58s ease, transform 0.58s ease;
+}
+
+.reveal-target.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes btnShimmer {
+  from { left: -130%; }
+  to { left: 160%; }
+}
+
+@keyframes heroSweep {
+  0% { left: -42%; }
+  100% { left: 120%; }
+}
+
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-orb,
+  .live-chip span:first-child,
+  .hero-card::before,
+  .detectBtn:hover::after,
+  .submitBtn:hover::after,
+  section.active {
+    animation: none !important;
+  }
+
+  .reveal-target,
+  .card,
+  .hero-card,
+  .issue-card,
+  .issue-card img {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
 
 

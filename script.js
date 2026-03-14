@@ -100,6 +100,23 @@ async function detectLocation() {
 
 // Photo preview
 document.addEventListener("DOMContentLoaded", () => {
+  const revealTargets = document.querySelectorAll(".hero-card, .card, .issue-card");
+  revealTargets.forEach((el) => el.classList.add("reveal-target"));
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -5% 0px" });
+
+    revealTargets.forEach((el) => revealObserver.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add("revealed"));
+  }
+
   const menu = document.getElementById("menu");
   const menuBtn = document.getElementById("menuBtn");
 
@@ -229,7 +246,6 @@ async function loadReports() {
     console.log("Error loading reports", err);
   }
 }
-
 
 
 
