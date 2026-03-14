@@ -1,16 +1,37 @@
-<div class="loginCard">
+function goToHomepage() {
+  window.location.href = "index.html";
+}
 
-<h2>RoadWatch PH Login</h2>
+function getCredentials() {
+  const email = document.getElementById("email")?.value.trim();
+  const password = document.getElementById("password")?.value.trim();
+  return { email, password };
+}
 
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+function login() {
+  const { email, password } = getCredentials();
 
-<button onclick="login()">Login</button>
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
 
-<button onclick="register()">Register</button>
+  goToHomepage();
+}
 
-<hr>
+function register() {
+  const { email, password } = getCredentials();
 
-<button onclick="googleLogin()">Login with Google</button>
+  if (!email || !password) {
+    alert("Please provide an email and password to register.");
+    return;
+  }
 
-</div>
+  alert("Registration successful. You may now continue to RoadWatch PH.");
+  goToHomepage();
+}
+
+function googleLogin() {
+  alert("Google sign-in is not configured yet. Redirecting to homepage.");
+  goToHomepage();
+}
