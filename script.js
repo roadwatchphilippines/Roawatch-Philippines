@@ -133,6 +133,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     reader.readAsDataURL(file);
   });
+
+  const liveStatus = document.getElementById("liveStatus");
+  const statuses = [
+    "Live updates active across Metro Manila",
+    "Citizens are reporting hazards in real-time",
+    "Safer roads start with your report"
+  ];
+
+  if (liveStatus) {
+    let statusIndex = 0;
+    setInterval(() => {
+      statusIndex = (statusIndex + 1) % statuses.length;
+      liveStatus.textContent = statuses[statusIndex];
+    }, 3200);
+  }
 });
 
 // Submit report

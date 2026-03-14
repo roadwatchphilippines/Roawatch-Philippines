@@ -1,14 +1,15 @@
 :root {
-  --bg: #071629;
-  --bg-soft: #0f2742;
-  --panel: rgba(10, 37, 64, 0.9);
-  --panel-strong: #0b223f;
+  --bg: #020b17;
+  --bg-soft: #0d2239;
+  --panel: rgba(8, 30, 54, 0.83);
+  --panel-strong: #0a1f36;
   --text: #f5f9ff;
-  --muted: #bdd6f7;
-  --accent: #56cfe1;
-  --accent-strong: #34a0ff;
-  --success: #80ffdb;
+  --muted: #bfd7f6;
+  --accent: #66d9ff;
+  --accent-strong: #2a9dff;
+  --success: #79ffd4;
 }
+
 
 * {
   box-sizing: border-box;
@@ -19,10 +20,53 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    linear-gradient(rgba(5, 13, 27, 0.82), rgba(5, 13, 27, 0.92)),
-    url("https://picsum.photos/id/1020/2000/1400") center/cover fixed no-repeat,
-    radial-gradient(circle at top, #163b64 0%, var(--bg) 45%, #050d19 100%);
+    radial-gradient(circle at 10% 15%, rgba(36, 120, 196, 0.25), transparent 35%),
+    radial-gradient(circle at 90% 80%, rgba(67, 168, 255, 0.22), transparent 40%),
+    linear-gradient(145deg, #030a14 0%, #071b31 45%, #051529 100%);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+
+.bg-orb {
+  position: fixed;
+  border-radius: 999px;
+  filter: blur(0.5px);
+  z-index: -1;
+  pointer-events: none;
+  animation: floatOrb 16s ease-in-out infinite alternate;
+}
+
+.orb-one {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(102, 217, 255, 0.35) 0%, rgba(42, 157, 255, 0.03) 70%);
+  top: 80px;
+  left: -60px;
+}
+
+.orb-two {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(121, 255, 212, 0.25) 0%, rgba(121, 255, 212, 0.02) 70%);
+  right: -30px;
+  top: 35%;
+  animation-delay: 2s;
+}
+
+.orb-three {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(81, 157, 255, 0.32) 0%, rgba(81, 157, 255, 0.03) 68%);
+  bottom: -90px;
+  left: 28%;
+  animation-delay: 4s;
+}
+
+@keyframes floatOrb {
+  from { transform: translateY(-8px) scale(1); }
+  to { transform: translateY(14px) scale(1.08); }
 }
 
 header {
@@ -42,9 +86,18 @@ header h2 {
   margin: 0;
   font-family: "Poppins", "Inter", sans-serif;
   font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: 0.4px;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
 }
+
+.brand-lockup p {
+  margin: 2px 0 0;
+  color: #9fcbff;
+  font-size: 0.76rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
 
 .menuBtn {
   font-size: 26px;
@@ -102,9 +155,10 @@ section {
   display: none;
   padding: 42px 2.5vw 58px;
   width: 100%;
-  max-width: 100%;
-  margin: 0;
+  max-width: 1280px;
+  margin: 0 auto;
 }
+
 
 section.active {
   display: block;
@@ -155,18 +209,51 @@ section.active {
 }
 
 .hero-card h1 {
-  margin: 12px 0 6px;
+  margin: 12px 0 8px;
   font-family: "Poppins", "Inter", sans-serif;
   font-weight: 800;
-  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: 0.7px;
+  font-size: clamp(2.6rem, 7vw, 4.15rem);
 }
+
 
 .subheader {
   margin: 0;
   font-family: "Poppins", "Inter", sans-serif;
-  font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+  font-size: clamp(1.2rem, 2.7vw, 1.8rem);
+  line-height: 1.35;
   color: #d9ecff;
+  text-wrap: balance;
 }
+
+.live-chip {
+  margin: 14px auto 0;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: rgba(17, 50, 83, 0.8);
+  border: 1px solid rgba(160, 220, 255, 0.4);
+  color: #c0e8ff;
+  font-size: 0.85rem;
+}
+
+.live-chip span:first-child {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #7fffd4;
+  box-shadow: 0 0 0 0 rgba(127, 255, 212, 0.7);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(127, 255, 212, 0.65); }
+  100% { box-shadow: 0 0 0 13px rgba(127, 255, 212, 0); }
+}
+
 
 .hero-purpose {
   max-width: 920px;
@@ -439,6 +526,10 @@ textarea {
 }
 
 @media (max-width: 700px) {
+  .brand-lockup p {
+    font-size: 0.67rem;
+  }
+
   .row {
     flex-direction: column;
   }
