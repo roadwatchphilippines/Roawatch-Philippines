@@ -160,8 +160,18 @@ section {
 }
 
 
+#home {
+  display: none;
+  gap: 24px;
+}
+
+
 section.active {
   display: block;
+}
+
+#home.active {
+  display: grid;
 }
 
 .card,
@@ -274,12 +284,16 @@ section.active {
 
 .home-top-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.35fr);
   gap: 22px;
-  margin-bottom: 30px;
+  align-items: stretch;
 }
 
 .report-focus-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 1px solid rgba(134, 208, 255, 0.48);
   background: linear-gradient(180deg, rgba(10, 45, 77, 0.94), rgba(9, 34, 61, 0.93));
 }
@@ -307,6 +321,10 @@ section.active {
 .quick-guide h3 {
   margin-top: 0;
   font-family: "Poppins", "Inter", sans-serif;
+}
+
+.quick-guide {
+  height: 100%;
 }
 
 .quick-guide-intro {
@@ -376,11 +394,13 @@ section.active {
 
 .issue-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 20px;
 }
 
 .issue-card {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(180deg, rgba(15, 39, 66, 0.95), rgba(7, 29, 55, 0.98));
   border: 1px solid rgba(178, 213, 255, 0.15);
   border-radius: 14px;
@@ -421,6 +441,7 @@ section.active {
 
 .issue-card div {
   padding: 14px;
+  flex: 1;
 }
 
 .issue-card h4 {
@@ -573,6 +594,12 @@ textarea {
 
   .issue-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 1200px) {
+  .steps-guide {
+    grid-template-columns: 1fr;
   }
 }
 
