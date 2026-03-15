@@ -88,8 +88,8 @@
 
 <!-- SUBMIT REPORT -->
 <section id="submit">
-  <div class="card">
-    <section class="home-info report-focus-card">
+  <div class="submit-stack">
+    <section class="card home-info report-focus-card submit-guide-card">
       <h3>What You Can Report</h3>
       <p class="report-lead">Citizens can report different types of road and infrastructure problems to help authorities respond faster and improve road safety.</p>
 
@@ -152,36 +152,37 @@
       <p>Every report helps agencies prioritize road repairs and improve safety for all road users.</p>
     </section>
 
-    <h2>Submit Road Issue</h2>
+    <div class="card submit-form-card">
+      <h2>Submit Road Issue</h2>
 
-    <h3>Reporter Information</h3>
-    <div class="row">
-      <input id="lastname" placeholder="Last Name">
-      <input id="firstname" placeholder="First Name">
-      <input id="mi" placeholder="M.I.">
-    </div>
+      <h3>Reporter Information</h3>
+      <div class="row">
+        <input id="lastname" placeholder="Last Name">
+        <input id="firstname" placeholder="First Name">
+        <input id="mi" placeholder="M.I.">
+      </div>
 
-    <div class="row">
-      <input id="email" placeholder="Email">
-      <input id="phone" placeholder="Mobile Number">
-    </div>
+      <div class="row">
+        <input id="email" placeholder="Email">
+        <input id="phone" placeholder="Mobile Number">
+      </div>
 
-    <h3>Road Location</h3>
-    <input id="locationText" placeholder="Street / Road Name (Type or Auto-detect)" />
-    <button class="detectBtn" onclick="detectLocation()">Auto-detect My Location</button>
+      <h3>Road Location</h3>
+      <input id="locationText" placeholder="Street / Road Name (Type or Auto-detect)" />
+      <button class="detectBtn" onclick="detectLocation()">Auto-detect My Location</button>
 
-    <h3>Select Location</h3>
-    <div id="reportMap"></div>
-    <p id="selectedLocation">No location selected</p>
+      <h3>Select Location</h3>
+      <div id="reportMap"></div>
+      <p id="selectedLocation">No location selected</p>
 
-    <h3>Road Issue</h3>
-    <textarea id="issue" placeholder="Describe the issue"></textarea>
+      <h3>Road Issue</h3>
+      <textarea id="issue" placeholder="Describe the issue"></textarea>
 
-    <h3>Upload Photo</h3>
-    <input type="file" id="photo">
-    <img id="photoPreview">
+      <h3>Upload Photo</h3>
+      <input type="file" id="photo">
+      <img id="photoPreview">
 
-    <button class="submitBtn" onclick="submitReport()">Submit Report</button>
+      <button class="submitBtn" onclick="submitReport()">Submit Report</button>
     </div>
   </div>
 </section>
