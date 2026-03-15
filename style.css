@@ -373,7 +373,7 @@ section.active {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid rgba(134, 208, 255, 0.48);
   background: linear-gradient(180deg, rgba(10, 45, 77, 0.94), rgba(9, 34, 61, 0.93));
 }
@@ -405,17 +405,24 @@ section.active {
   line-height: 1.6;
 }
 
+.report-focus-header {
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(146, 205, 255, 0.2);
+}
+
 .issue-type-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-  margin-bottom: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: stretch;
 }
 
 
 .issue-type-grid.horizontal-scroll {
   grid-auto-flow: column;
-  grid-auto-columns: minmax(230px, 270px);
+  grid-auto-columns: minmax(250px, 290px);
   grid-template-columns: none;
   width: max-content;
   margin-bottom: 0;
@@ -426,10 +433,13 @@ section.active {
 }
 
 .issue-type-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   background: rgba(9, 34, 61, 0.82);
   border: 1px solid rgba(146, 205, 255, 0.26);
   border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 12px 28px rgba(2, 18, 34, 0.24);
 }
 
 .issue-type-card img {
@@ -440,18 +450,26 @@ section.active {
 }
 
 .issue-type-card h4 {
-  margin: 10px 12px 6px;
-  font-size: 0.94rem;
-  line-height: 1.4;
+  margin: 12px 14px 8px;
+  font-size: 0.96rem;
+  line-height: 1.45;
   color: #def1ff;
+  min-height: 2.8em;
 }
 
 .issue-type-card ul {
   margin: 0;
-  padding: 0 12px 14px 28px;
+  padding: 0 14px 14px 30px;
   color: #c2dbf6;
   line-height: 1.5;
   font-size: 0.89rem;
+}
+
+.report-focus-note {
+  border-top: 1px solid rgba(147, 204, 255, 0.2);
+  margin-top: 6px;
+  padding-top: 12px;
+  text-align: center;
 }
 
 .issue-type-card li + li {
@@ -646,8 +664,9 @@ section.active {
   gap: 20px;
 }
 
+
 .submit-guide-card {
-  padding: 0;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -687,7 +706,7 @@ section.active {
 .issue-type-scroll {
   overflow-x: auto;
   overflow-y: hidden;
-  margin: 14px 0;
+  margin: 0 0 16px;
   padding-bottom: 10px;
   scrollbar-width: thin;
   scrollbar-color: rgba(125, 213, 255, 0.72) rgba(5, 28, 52, 0.65);
@@ -910,6 +929,13 @@ textarea {
 @media (max-width: 1200px) {
   .steps-guide {
     grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .issue-type-card h4 {
+    min-height: 0;
   }
 }
 
