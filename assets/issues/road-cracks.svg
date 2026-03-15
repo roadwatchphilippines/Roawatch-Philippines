@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'>
+  <rect width='1200' height='700' fill='#6e7683'/>
+  <path d='M0 330 L1200 520 L1200 700 L0 700 Z' fill='#4a5059'/>
+  <path d='M220 700 L340 460 L300 410 L410 200 L390 120' stroke='#1f2329' stroke-width='15' fill='none'/>
+  <path d='M620 700 L680 530 L760 470 L720 380 L820 240' stroke='#1c2026' stroke-width='13' fill='none'/>
+  <path d='M950 700 L900 560 L980 480 L920 360' stroke='#232831' stroke-width='12' fill='none'/>
+  <text x='70' y='120' fill='#f4f8ff' font-size='66' font-family='Inter,Arial,sans-serif' font-weight='700'>Cracked pavement</text>
+</svg>
