@@ -214,6 +214,11 @@ section.active {
   display: grid;
 }
 
+#home.active > * {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+}
+
 .card,
 .hero-card {
   background: var(--panel);
@@ -335,13 +340,12 @@ section.active {
 }
 
 .hero-note {
-  margin: 14px 0 0;
-  font-size: 0.95rem;
+  margin: 12px auto 0;
   color: #9fdbff;
+  font-size: 0.95rem;
   font-weight: 600;
+  text-align: center;
 }
-
-
 
 .home-top-grid {
   display: grid;
