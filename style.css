@@ -192,7 +192,7 @@ header h2 {
 
 section {
   display: none;
-  padding: 42px 2.5vw 58px;
+  padding: 36px 16px 52px;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -211,11 +211,14 @@ section.active {
 }
 
 #home.active {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 #home.active > * {
-  width: min(100%, 1180px);
+  width: 100%;
+  max-width: 1180px;
   margin-inline: auto;
 }
 
@@ -791,7 +794,7 @@ textarea {
   }
 
   section {
-    padding: 28px 14px 34px;
+    padding: 28px 12px 34px;
   }
 
   .issue-card img {
