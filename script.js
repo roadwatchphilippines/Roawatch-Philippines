@@ -61,42 +61,12 @@ function resolveInitialPage() {
 
 function setupSubmitQr() {
   const submitQr = document.getElementById("submitQr");
-  const submitQrLink = document.getElementById("submitQrLink");
-  const submitQrHelp = document.getElementById("submitQrHelp");
-  if (!submitQr || !submitQrLink) return;
+  if (!submitQr) return;
 
   const submitUrl = `${window.location.origin}${window.location.pathname}?page=submit`;
-  submitQrLink.href = submitUrl;
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(submitUrl)}`;
 
-  const providers = [
-    `https://quickchart.io/qr?size=220&text=${encodeURIComponent(submitUrl)}`,
-    `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(submitUrl)}`
-  ];
-
-  let providerIndex = 0;
-
-  const applyProvider = () => {
-    if (providerIndex >= providers.length) {
-      submitQr.style.display = "none";
-      if (submitQrHelp) {
-        submitQrHelp.textContent = "QR temporarily unavailable. Tap this card to open the Submit Road Issue form.";
-      }
-      return;
-    }
-
-    submitQr.src = providers[providerIndex];
-  };
-
-  submitQr.onerror = () => {
-    providerIndex += 1;
-    applyProvider();
-  };
-
-  submitQr.onload = () => {
-    submitQr.style.display = "block";
-  };
-
-  applyProvider();
+  submitQr.src = qrApiUrl;
 }
 
 // Initialize the map
