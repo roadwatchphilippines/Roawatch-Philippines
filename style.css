@@ -192,7 +192,7 @@ header h2 {
 
 section {
   display: none;
-  padding: 36px 16px 52px;
+  padding: 42px clamp(16px, 4vw, 36px) 58px;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -220,6 +220,12 @@ section.active {
   width: 100%;
   max-width: 1180px;
   margin-inline: auto;
+}
+
+#home.active > .hero-card,
+#home.active > .home-top-grid,
+#home.active > .issues-wrap {
+  max-width: 100%;
 }
 
 .card,
@@ -794,7 +800,7 @@ textarea {
   }
 
   section {
-    padding: 28px 12px 34px;
+    padding: 28px 16px 34px;
   }
 
   .issue-card img {
