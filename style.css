@@ -405,11 +405,15 @@ section.active {
   line-height: 1.6;
 }
 
+.report-focus-header {
+  margin-bottom: 16px;
+}
+
 .issue-type-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-  margin-bottom: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 
@@ -426,6 +430,8 @@ section.active {
 }
 
 .issue-type-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   background: rgba(9, 34, 61, 0.82);
   border: 1px solid rgba(146, 205, 255, 0.26);
   border-radius: 14px;
@@ -440,7 +446,7 @@ section.active {
 }
 
 .issue-type-card h4 {
-  margin: 10px 12px 6px;
+  margin: 12px 14px 8px;
   font-size: 0.94rem;
   line-height: 1.4;
   color: #def1ff;
@@ -448,10 +454,16 @@ section.active {
 
 .issue-type-card ul {
   margin: 0;
-  padding: 0 12px 14px 28px;
+  padding: 0 14px 14px 30px;
   color: #c2dbf6;
   line-height: 1.5;
   font-size: 0.89rem;
+}
+
+.report-focus-note {
+  border-top: 1px solid rgba(147, 204, 255, 0.2);
+  margin-top: 6px;
+  padding-top: 12px;
 }
 
 .issue-type-card li + li {
@@ -647,7 +659,7 @@ section.active {
 }
 
 .submit-guide-card {
-  padding: 0;
+  padding: 20px;
   overflow: hidden;
 }
 
