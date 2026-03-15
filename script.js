@@ -50,6 +50,25 @@ function showPage(page) {
   }
 }
 
+
+function resolveInitialPage() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedPage = params.get("page");
+  const hashPage = window.location.hash.replace("#", "");
+  if (requestedPage === "submit" || hashPage === "submit") return "submit";
+  return "home";
+}
+
+function setupSubmitQr() {
+  const submitQr = document.getElementById("submitQr");
+  if (!submitQr) return;
+
+  const submitUrl = `${window.location.origin}${window.location.pathname}?page=submit`;
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(submitUrl)}`;
+
+  submitQr.src = qrApiUrl;
+}
+
 // Initialize the map
 function loadMap() {
   if (map) return;
@@ -132,6 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1450);
     }
   }
+
+  const initialPage = resolveInitialPage();
+  showPage(initialPage);
+  setupSubmitQr();
 
   const revealTargets = document.querySelectorAll(".hero-card, .card, .issue-card");
   revealTargets.forEach((el) => el.classList.add("reveal-target"));
