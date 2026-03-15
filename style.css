@@ -64,6 +64,45 @@ body {
   animation-delay: 4s;
 }
 
+
+
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, rgba(15, 52, 88, 0.92), rgba(2, 11, 23, 0.98));
+  z-index: 1400;
+  pointer-events: none;
+}
+
+.brand-intro span {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8f7ff;
+  text-shadow: 0 0 35px rgba(102, 217, 255, 0.4);
+  animation: introPop 0.95s cubic-bezier(0.2, 0.85, 0.2, 1.1) forwards;
+}
+
+body.intro-playing header,
+body.intro-playing .sidebar {
+  transform: translateX(-260px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.intro-done .brand-intro {
+  animation: introOverlayOut 0.65s ease forwards;
+}
+
+body.intro-done header,
+body.intro-done .sidebar {
+  animation: slideInFromLeft 0.7s cubic-bezier(0.2, 0.9, 0.24, 1) both;
+  animation-delay: 0.18s;
+}
 @keyframes floatOrb {
   from { transform: translateY(-8px) scale(1); }
   to { transform: translateY(14px) scale(1.08); }
@@ -720,4 +759,21 @@ textarea {
   section {
     padding: 28px 14px 34px;
   }
+}
+
+
+@keyframes introPop {
+  0% { transform: scale(0.35); opacity: 0; filter: blur(6px); }
+  62% { transform: scale(1.12); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes introOverlayOut {
+  0% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes slideInFromLeft {
+  0% { transform: translateX(-260px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
