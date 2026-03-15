@@ -211,11 +211,14 @@ section.active {
 }
 
 #home.active {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 #home.active > * {
-  width: min(100%, 1180px);
+  width: 100%;
+  max-width: 1180px;
   margin-inline: auto;
 }
 
