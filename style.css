@@ -449,14 +449,44 @@ section.active {
 
 .issues-wrap h3 {
   margin-top: 0;
+  margin-bottom: 8px;
   font-family: "Poppins", "Inter", sans-serif;
   font-size: 1.6rem;
+}
+
+.issues-intro {
+  margin: 0 0 16px;
+  color: #b8d9ff;
+  line-height: 1.5;
 }
 
 .issue-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 20px;
+}
+
+.issue-grid.swipe-ready {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 320px);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  padding-bottom: 10px;
+}
+
+.issue-grid.swipe-ready .issue-card {
+  scroll-snap-align: start;
+}
+
+.issue-grid.swipe-ready::-webkit-scrollbar {
+  height: 8px;
+}
+
+.issue-grid.swipe-ready::-webkit-scrollbar-thumb {
+  background: rgba(154, 201, 255, 0.5);
+  border-radius: 999px;
 }
 
 .issue-card {
@@ -732,7 +762,7 @@ textarea {
   }
 
   .issue-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-auto-columns: minmax(250px, 86vw);
   }
 }
 
@@ -758,6 +788,10 @@ textarea {
 
   section {
     padding: 28px 14px 34px;
+  }
+
+  .issue-card img {
+    height: 210px;
   }
 }
 
