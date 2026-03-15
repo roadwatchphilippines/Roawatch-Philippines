@@ -113,6 +113,26 @@ async function detectLocation() {
 
 // Photo preview
 document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const introOverlay = document.getElementById("brandIntro");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (body) {
+    if (prefersReducedMotion) {
+      body.classList.add("intro-done");
+      introOverlay?.setAttribute("aria-hidden", "true");
+    } else {
+      body.classList.add("intro-playing");
+      introOverlay?.setAttribute("aria-hidden", "false");
+
+      setTimeout(() => {
+        body.classList.remove("intro-playing");
+        body.classList.add("intro-done");
+        introOverlay?.setAttribute("aria-hidden", "true");
+      }, 2200);
+    }
+  }
+
   const revealTargets = document.querySelectorAll(".hero-card, .card, .issue-card");
   revealTargets.forEach((el) => el.classList.add("reveal-target"));
 

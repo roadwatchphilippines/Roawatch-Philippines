@@ -64,6 +64,92 @@ body {
   animation-delay: 4s;
 }
 
+
+
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, rgba(15, 52, 88, 0.95), rgba(2, 11, 23, 1));
+  z-index: 1500;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.intro-brand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: clamp(2.1rem, 6vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e8f7ff;
+  text-shadow: 0 0 35px rgba(102, 217, 255, 0.45);
+  opacity: 0;
+}
+
+.intro-subtitle {
+  position: absolute;
+  left: 92px;
+  top: 58px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9fcbff;
+  opacity: 0;
+}
+
+body.intro-playing {
+  overflow: hidden;
+}
+
+body.intro-playing section,
+body.intro-playing header,
+body.intro-playing .sidebar {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.intro-playing .intro-brand {
+  animation: introBrandJourney 1.9s cubic-bezier(0.2, 0.86, 0.24, 1) forwards;
+}
+
+body.intro-playing .intro-subtitle {
+  animation: introSubtitlePop 0.48s ease forwards;
+  animation-delay: 1.65s;
+}
+
+body.intro-done .brand-intro {
+  animation: introOverlayOut 0.5s ease forwards;
+}
+
+body.intro-done header,
+body.intro-done .sidebar {
+  opacity: 1;
+  visibility: visible;
+  animation: chromeReveal 0.42s ease-out both;
+}
+
+body.intro-done #home.active {
+  animation: homeShellPop 0.45s ease-out both;
+}
+
+body.intro-done #home.active > * {
+  animation: homeItemPop 0.55s cubic-bezier(0.19, 0.88, 0.29, 1) both;
+}
+
+body.intro-done #home.active > *:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+body.intro-done #home.active > *:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
 @keyframes floatOrb {
   from { transform: translateY(-8px) scale(1); }
   to { transform: translateY(14px) scale(1.08); }
@@ -721,3 +807,69 @@ textarea {
     padding: 28px 14px 34px;
   }
 }
+
+
+@keyframes introBrandJourney {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35) rotate(-20deg);
+    filter: blur(6px);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12) rotate(0deg);
+    filter: blur(0);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(calc(-50% - 220px), calc(-50% - 150px)) scale(0.5) rotate(300deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(calc(-50% - 260px), calc(-50% - 178px)) scale(0.36) rotate(360deg);
+  }
+}
+
+@keyframes introSubtitlePop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes introOverlayOut {
+  0% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes chromeReveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes homeShellPop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes homeItemPop {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
