@@ -8,6 +8,10 @@
   --accent: #66d9ff;
   --accent-strong: #2a9dff;
   --success: #79ffd4;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 
@@ -115,7 +119,7 @@ header {
   background: rgba(0, 16, 35, 0.86);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(134, 175, 227, 0.3);
-  padding: 14px 20px;
+  padding: calc(14px + var(--safe-top)) calc(20px + var(--safe-right)) 14px calc(20px + var(--safe-left));
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -192,7 +196,11 @@ header h2 {
 
 section {
   display: none;
-  padding: 42px clamp(16px, 4vw, 36px) 58px;
+  padding:
+    42px
+    calc(clamp(16px, 4vw, 36px) + var(--safe-right))
+    calc(58px + var(--safe-bottom))
+    calc(clamp(16px, 4vw, 36px) + var(--safe-left));
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -800,7 +808,7 @@ textarea {
   }
 
   section {
-    padding: 28px 16px 34px;
+    padding: 28px calc(16px + var(--safe-right)) calc(34px + var(--safe-bottom)) calc(16px + var(--safe-left));
   }
 
   .issue-card img {
