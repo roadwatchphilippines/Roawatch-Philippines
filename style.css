@@ -540,6 +540,7 @@ section.active {
   list-style: none;
   display: grid;
   gap: 10px;
+  counter-reset: journey-step;
 }
 
 .journey-steps li {
@@ -568,6 +569,7 @@ section.active {
 .journey-steps strong {
   display: block;
   color: #e9f4ff;
+  padding-right: 28px;
 }
 
 .journey-steps small {
