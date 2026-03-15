@@ -50,6 +50,55 @@ function showPage(page) {
   }
 }
 
+
+function resolveInitialPage() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedPage = params.get("page");
+  const hashPage = window.location.hash.replace("#", "");
+  if (requestedPage === "submit" || hashPage === "submit") return "submit";
+  return "home";
+}
+
+function setupSubmitQr() {
+  const submitQr = document.getElementById("submitQr");
+  const submitQrLink = document.getElementById("submitQrLink");
+  const submitQrHelp = document.getElementById("submitQrHelp");
+  if (!submitQr || !submitQrLink) return;
+
+  const submitUrl = `${window.location.origin}${window.location.pathname}?page=submit`;
+  submitQrLink.href = submitUrl;
+
+  const providers = [
+    `https://quickchart.io/qr?size=220&text=${encodeURIComponent(submitUrl)}`,
+    `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(submitUrl)}`
+  ];
+
+  let providerIndex = 0;
+
+  const applyProvider = () => {
+    if (providerIndex >= providers.length) {
+      submitQr.style.display = "none";
+      if (submitQrHelp) {
+        submitQrHelp.textContent = "QR temporarily unavailable. Tap this card to open the Submit Road Issue form.";
+      }
+      return;
+    }
+
+    submitQr.src = providers[providerIndex];
+  };
+
+  submitQr.onerror = () => {
+    providerIndex += 1;
+    applyProvider();
+  };
+
+  submitQr.onload = () => {
+    submitQr.style.display = "block";
+  };
+
+  applyProvider();
+}
+
 // Initialize the map
 function loadMap() {
   if (map) return;
@@ -132,6 +181,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1450);
     }
   }
+
+  const initialPage = resolveInitialPage();
+  showPage(initialPage);
+  setupSubmitQr();
 
   const revealTargets = document.querySelectorAll(".hero-card, .card, .issue-card");
   revealTargets.forEach((el) => el.classList.add("reveal-target"));
