@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body.classList.remove("intro-playing");
         body.classList.add("intro-done");
         introOverlay?.setAttribute("aria-hidden", "true");
-      }, 2200);
+      }, 1450);
     }
   }
 
