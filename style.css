@@ -347,12 +347,22 @@ section.active {
 }
 
 
+.hero-purpose-wrap {
+  max-width: 960px;
+  margin: 18px auto 0;
+  padding: 16px 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(166, 220, 255, 0.28);
+  background: linear-gradient(145deg, rgba(9, 45, 75, 0.62), rgba(7, 27, 49, 0.45));
+  text-align: left;
+}
+
 .hero-purpose {
-  max-width: 920px;
-  margin: 16px auto 0;
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 1.05rem;
+  margin: 0;
+  color: #d9ecff;
+  line-height: 1.75;
+  font-size: clamp(1rem, 1.9vw, 1.12rem);
+  text-wrap: pretty;
 }
 
 .hero-note {
@@ -1023,5 +1033,11 @@ textarea {
 @media (max-width: 900px) {
   .journey-columns {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-purpose-wrap {
+    padding: 14px 16px;
   }
 }
