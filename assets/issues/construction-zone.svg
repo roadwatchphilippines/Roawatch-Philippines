@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'>
+  <rect width='1200' height='700' fill='#b4d8ff'/>
+  <rect y='420' width='1200' height='280' fill='#555d67'/>
+  <rect x='220' y='390' width='760' height='30' fill='#f4f6f8'/>
+  <rect x='250' y='300' width='120' height='120' fill='#ff8c32'/>
+  <rect x='480' y='300' width='120' height='120' fill='#ff8c32'/>
+  <rect x='710' y='300' width='120' height='120' fill='#ff8c32'/>
+  <polygon points='980,180 1080,360 880,360' fill='#ffd33d' stroke='#2d2d2d' stroke-width='14'/>
+  <text x='945' y='315' font-size='90' font-family='Inter,Arial' font-weight='800' fill='#2d2d2d' text-anchor='middle'>!</text>
+  <text x='65' y='120' fill='#14365a' font-size='64' font-family='Inter,Arial,sans-serif' font-weight='700'>Construction warning area</text>
+</svg>

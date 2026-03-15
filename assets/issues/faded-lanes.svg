@@ -1,0 +1,9 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'>
+  <rect width='1200' height='700' fill='#7fa7d3'/>
+  <polygon points='320,700 560,300 640,300 500,700' fill='#4d5560'/>
+  <polygon points='880,700 640,300 720,300 1060,700' fill='#4d5560'/>
+  <rect x='590' y='350' width='20' height='70' fill='#e8ecf2' opacity='0.55'/>
+  <rect x='590' y='450' width='20' height='70' fill='#e8ecf2' opacity='0.4'/>
+  <rect x='590' y='550' width='20' height='70' fill='#e8ecf2' opacity='0.25'/>
+  <text x='70' y='120' fill='#0f2f52' font-size='64' font-family='Inter,Arial,sans-serif' font-weight='700'>Faded lane markings</text>
+</svg>
