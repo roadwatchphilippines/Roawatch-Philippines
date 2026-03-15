@@ -231,8 +231,7 @@ section.active {
 }
 
 #home.active > .hero-card,
-#home.active > .home-top-grid,
-#home.active > .issues-wrap {
+#home.active > .home-main-stack {
   max-width: 100%;
 }
 
@@ -364,11 +363,10 @@ section.active {
   text-align: center;
 }
 
-.home-top-grid {
+.home-main-stack {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
   gap: 22px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .report-focus-card {
@@ -405,13 +403,6 @@ section.active {
   margin: 0;
   color: var(--muted);
   line-height: 1.6;
-}
-
-.report-view-all {
-  margin: 14px 0 18px;
-  color: #9ad6ff;
-  font-weight: 700;
-  letter-spacing: 0.3px;
 }
 
 .issue-type-grid {
@@ -460,7 +451,8 @@ section.active {
 }
 
 .quick-guide {
-  height: 100%;
+  border: 1px solid rgba(134, 208, 255, 0.34);
+  background: linear-gradient(180deg, rgba(10, 39, 68, 0.92), rgba(8, 31, 56, 0.9));
 }
 
 .quick-guide-intro {
@@ -828,10 +820,6 @@ textarea {
 
 
 @media (max-width: 980px) {
-  .home-top-grid {
-    grid-template-columns: 1fr;
-  }
-
   .steps-guide {
     grid-template-columns: 1fr;
   }
