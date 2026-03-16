@@ -519,6 +519,102 @@ section.active {
   margin-top: 4px;
 }
 
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.track-report-card {
+  border: 1px solid rgba(134, 208, 255, 0.42);
+  background: linear-gradient(180deg, rgba(10, 39, 68, 0.9), rgba(8, 31, 56, 0.92));
+}
+
+.track-report-card h3 {
+  margin: 8px 0;
+  font-family: "Poppins", "Inter", sans-serif;
+}
+
+.track-report-copy {
+  margin: 0 0 14px;
+  color: #b8d9ff;
+}
+
+.track-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.track-search-form button {
+  border: none;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-weight: 700;
+  color: #062444;
+  background: var(--success);
+  cursor: pointer;
+}
+
+.track-search-feedback {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  color: #c6e4ff;
+}
+
+.track-result-wrapper {
+  margin-top: 14px;
+  overflow-x: auto;
+}
+
+.track-result-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  border: 1px solid rgba(149, 208, 255, 0.28);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(9, 33, 55, 0.66);
+}
+
+.track-result-table th,
+.track-result-table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid rgba(149, 208, 255, 0.18);
+  color: #e9f4ff;
+  font-size: 0.92rem;
+}
+
+.track-result-table th {
+  background: rgba(12, 44, 72, 0.8);
+  color: #93deff;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.track-result-table tr:last-child td {
+  border-bottom: none;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(121, 255, 212, 0.2);
+  border: 1px solid rgba(121, 255, 212, 0.4);
+  color: #c5ffe8;
+  font-weight: 600;
+}
+
 .journey-guide {
   border: 1px solid rgba(134, 208, 255, 0.42);
   background:
@@ -1110,6 +1206,14 @@ textarea {
 
   .row {
     flex-direction: column;
+  }
+
+  .track-search-form {
+    grid-template-columns: 1fr;
+  }
+
+  .track-search-form button {
+    min-height: 44px;
   }
 
   .hero-card,

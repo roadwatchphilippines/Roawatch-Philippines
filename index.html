@@ -137,6 +137,34 @@
         <button type="button" class="journey-cta-btn" onclick="showPage('submit')">Start a Road Report</button>
       </div>
     </div>
+
+    <div class="card track-report-card" aria-labelledby="trackReportHeading">
+      <p class="journey-eyebrow">Track Report Status</p>
+      <h3 id="trackReportHeading">Search by Tracking Number</h3>
+      <p class="track-report-copy">Enter your tracking number to view the submitted report details and current status.</p>
+
+      <form id="trackSearchForm" class="track-search-form">
+        <label for="trackingSearchInput" class="sr-only">Tracking number</label>
+        <input id="trackingSearchInput" type="text" placeholder="e.g., RW1735123456789" required>
+        <button type="submit">Search</button>
+      </form>
+
+      <p id="trackingSearchFeedback" class="track-search-feedback" role="status" aria-live="polite"></p>
+
+      <div id="trackingResultWrapper" class="track-result-wrapper" hidden>
+        <table class="track-result-table">
+          <thead>
+            <tr>
+              <th>Submission Time</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="trackingResultBody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
