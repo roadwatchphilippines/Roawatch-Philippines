@@ -2,6 +2,7 @@ let map;
 let marker;
 let lat = 0;
 let lng = 0;
+let cachedReports = [];
 
 const API_URL = "https://script.google.com/macros/s/AKfycbw4xD2FCUwBRQVORa-EChiCcA2R5O5sm6vS1_0dOehUPGpQV1-F66vVmjfgllbRaLbO/exec"; // <-- replace with your actual URL
 
@@ -120,6 +121,116 @@ async function detectLocation() {
   });
 }
 
+
+function normalizeStatus(status) {
+  const rawStatus = (status || "Pending").toString().trim();
+  const normalized = rawStatus.toLowerCase();
+  const allowedStatuses = ["pending", "verified", "in progress", "repaired"];
+  if (!allowedStatuses.includes(normalized)) return "Pending";
+  return normalized.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+}
+
+function formatSubmissionTime(report) {
+  const keys = ["timestamp", "time", "submittedAt", "submissionTime", "date", "createdAt"];
+  const rawTime = keys.map(key => report[key]).find(Boolean);
+  if (!rawTime) return "Not available";
+
+  const parsed = new Date(rawTime);
+  if (Number.isNaN(parsed.getTime())) return String(rawTime);
+
+  return parsed.toLocaleString("en-PH", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function findReportByTracking(reports, trackingNumber) {
+  const target = trackingNumber.trim().toLowerCase();
+  return reports.find(report => {
+    const tracking = (report.tracking || report.trackingNumber || report.track || "").toString().trim().toLowerCase();
+    return tracking === target;
+  });
+}
+
+function renderTrackingResult(report) {
+  const wrapper = document.getElementById("trackingResultWrapper");
+  const tbody = document.getElementById("trackingResultBody");
+  if (!wrapper || !tbody) return;
+
+  const lastname = (report.lastname || "").trim();
+  const firstname = (report.firstname || "").trim();
+  const middleInitial = (report.mi || report.middleinitial || report.middleInitial || "").trim();
+  let fullName = "Not available";
+
+  if (lastname || firstname || middleInitial) {
+    const baseName = [lastname, firstname].filter(Boolean).join(", ");
+    fullName = `${baseName}${middleInitial ? ` ${middleInitial}.` : ""}`.trim();
+  }
+
+  const location = (report.location || report.address || "Not available").toString().trim() || "Not available";
+
+  tbody.innerHTML = `
+    <tr>
+      <td>${formatSubmissionTime(report)}</td>
+      <td>${fullName}</td>
+      <td>${location}</td>
+      <td><span class="status-pill">${normalizeStatus(report.status)}</span></td>
+    </tr>
+  `;
+
+  wrapper.hidden = false;
+}
+
+async function handleTrackingSearch(event) {
+  event.preventDefault();
+
+  const feedback = document.getElementById("trackingSearchFeedback");
+  const input = document.getElementById("trackingSearchInput");
+  const wrapper = document.getElementById("trackingResultWrapper");
+  const tbody = document.getElementById("trackingResultBody");
+
+  if (!input || !feedback || !wrapper || !tbody) return;
+
+  const trackingNumber = input.value.trim();
+  if (!trackingNumber) {
+    feedback.textContent = "Please enter a valid tracking number.";
+    wrapper.hidden = true;
+    tbody.innerHTML = "";
+    return;
+  }
+
+  feedback.textContent = "Searching report...";
+
+  try {
+    let reports = cachedReports;
+    if (!Array.isArray(reports) || reports.length === 0) {
+      const response = await fetch(API_URL);
+      reports = await response.json();
+      cachedReports = Array.isArray(reports) ? reports : [];
+    }
+
+    const matchedReport = findReportByTracking(cachedReports, trackingNumber);
+
+    if (!matchedReport) {
+      feedback.textContent = "No report found for this tracking number.";
+      wrapper.hidden = true;
+      tbody.innerHTML = "";
+      return;
+    }
+
+    renderTrackingResult(matchedReport);
+    feedback.textContent = "Report found.";
+  } catch (error) {
+    console.error("Tracking search failed", error);
+    feedback.textContent = "Unable to search right now. Please try again later.";
+    wrapper.hidden = true;
+    tbody.innerHTML = "";
+  }
+}
+
 // Photo preview
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
@@ -196,6 +307,11 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       reader.readAsDataURL(file);
     });
+  }
+
+  const trackSearchForm = document.getElementById("trackSearchForm");
+  if (trackSearchForm) {
+    trackSearchForm.addEventListener("submit", handleTrackingSearch);
   }
 
   const liveStatus = document.getElementById("liveStatus");
@@ -281,13 +397,14 @@ async function loadReports() {
   try {
     let response = await fetch(API_URL);
     let reports = await response.json();
+    cachedReports = Array.isArray(reports) ? reports : [];
 
-    reports.forEach(r => {
+    cachedReports.forEach(r => {
       if (!r.lat || !r.lng) return;
 
       L.marker([parseFloat(r.lat), parseFloat(r.lng)])
         .addTo(map)
-        .bindPopup("<b>" + r.issue + "</b><br>" + r.location + "<br>Status: " + (r.status || "Pending"));
+        .bindPopup("<b>" + r.issue + "</b><br>" + r.location + "<br>Status: " + normalizeStatus(r.status));
     });
   } catch (err) {
     console.log("Error loading reports", err);
