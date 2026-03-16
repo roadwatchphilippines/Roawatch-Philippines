@@ -39,7 +39,7 @@ function toReportModel(report) {
     firstname: getFieldValue(report, ["firstname", "firstName", "givenName", "First Name"]),
     mi: getFieldValue(report, ["mi", "middleinitial", "middleInitial", "Middle Initial"]),
     location: getFieldValue(report, ["location", "address", "road", "Road Location"]),
-    issue: getFieldValue(report, ["issue", "problem", "Issue"]),
+    issue: getFieldValue(report, ["issue", "problem", "details", "description", "Issue", "Details", "Report Details"]),
     status: getFieldValue(report, ["status", "reportStatus", "Status"]),
     lat: getFieldValue(report, ["lat", "latitude", "Latitude"]),
     lng: getFieldValue(report, ["lng", "lon", "longitude", "Longitude"]),
@@ -48,6 +48,18 @@ function toReportModel(report) {
 }
 
 function parseReportsFromApi(payload) {
+  if (typeof payload === "string") {
+    const trimmedPayload = payload.trim();
+    if (!trimmedPayload) return [];
+
+    try {
+      return parseReportsFromApi(JSON.parse(trimmedPayload));
+    } catch (error) {
+      console.warn("Unable to parse string payload from API", error);
+      return [];
+    }
+  }
+
   if (Array.isArray(payload)) return payload.map(toReportModel);
 
   if (payload && typeof payload === "object") {
@@ -230,12 +242,14 @@ function renderTrackingResult(report) {
   }
 
   const location = (report.location || report.address || "Not available").toString().trim() || "Not available";
+  const issueDetails = (report.issue || report.details || "Not available").toString().trim() || "Not available";
 
   tbody.innerHTML = `
     <tr>
       <td>${formatSubmissionTime(report)}</td>
       <td>${fullName}</td>
       <td>${location}</td>
+      <td>${issueDetails}</td>
       <td><span class="status-pill">${normalizeStatus(report.status)}</span></td>
     </tr>
   `;
@@ -465,5 +479,4 @@ async function loadReports() {
     console.log("Error loading reports", err);
   }
 }
-
 
