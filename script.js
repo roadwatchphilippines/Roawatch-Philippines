@@ -6,6 +6,66 @@ let cachedReports = [];
 
 const API_URL = "https://script.google.com/macros/s/AKfycbw4xD2FCUwBRQVORa-EChiCcA2R5O5sm6vS1_0dOehUPGpQV1-F66vVmjfgllbRaLbO/exec"; // <-- replace with your actual URL
 
+function normalizeKey(key) {
+  return (key || "").toString().trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function getFieldValue(record, aliases) {
+  if (!record || typeof record !== "object") return "";
+
+  for (const alias of aliases) {
+    if (record[alias] !== undefined && record[alias] !== null) {
+      return record[alias];
+    }
+  }
+
+  const normalized = Object.keys(record).reduce((acc, key) => {
+    acc[normalizeKey(key)] = record[key];
+    return acc;
+  }, {});
+
+  for (const alias of aliases) {
+    const value = normalized[normalizeKey(alias)];
+    if (value !== undefined && value !== null) return value;
+  }
+
+  return "";
+}
+
+function toReportModel(report) {
+  return {
+    tracking: getFieldValue(report, ["tracking", "trackingNumber", "tracking_no", "Tracking Number"]),
+    lastname: getFieldValue(report, ["lastname", "lastName", "surname", "Last Name"]),
+    firstname: getFieldValue(report, ["firstname", "firstName", "givenName", "First Name"]),
+    mi: getFieldValue(report, ["mi", "middleinitial", "middleInitial", "Middle Initial"]),
+    location: getFieldValue(report, ["location", "address", "road", "Road Location"]),
+    issue: getFieldValue(report, ["issue", "problem", "Issue"]),
+    status: getFieldValue(report, ["status", "reportStatus", "Status"]),
+    lat: getFieldValue(report, ["lat", "latitude", "Latitude"]),
+    lng: getFieldValue(report, ["lng", "lon", "longitude", "Longitude"]),
+    timestamp: getFieldValue(report, ["timestamp", "time", "submittedAt", "submissionTime", "date", "createdAt", "Submitted At"])
+  };
+}
+
+function parseReportsFromApi(payload) {
+  if (Array.isArray(payload)) return payload.map(toReportModel);
+
+  if (payload && typeof payload === "object") {
+    const possibleCollections = [payload.data, payload.reports, payload.items, payload.rows];
+    const collection = possibleCollections.find(Array.isArray);
+    if (collection) return collection.map(toReportModel);
+  }
+
+  return [];
+}
+
+async function fetchReports() {
+  const response = await fetch(API_URL);
+  const payload = await response.json();
+  cachedReports = parseReportsFromApi(payload);
+  return cachedReports;
+}
+
 // Sidebar toggle
 function isMenuOpen() {
   return document.getElementById("menu")?.classList.contains("open") || false;
@@ -131,8 +191,7 @@ function normalizeStatus(status) {
 }
 
 function formatSubmissionTime(report) {
-  const keys = ["timestamp", "time", "submittedAt", "submissionTime", "date", "createdAt"];
-  const rawTime = keys.map(key => report[key]).find(Boolean);
+  const rawTime = getFieldValue(report, ["timestamp", "time", "submittedAt", "submissionTime", "date", "createdAt", "Submitted At"]);
   if (!rawTime) return "Not available";
 
   const parsed = new Date(rawTime);
@@ -150,7 +209,7 @@ function formatSubmissionTime(report) {
 function findReportByTracking(reports, trackingNumber) {
   const target = trackingNumber.trim().toLowerCase();
   return reports.find(report => {
-    const tracking = (report.tracking || report.trackingNumber || report.track || "").toString().trim().toLowerCase();
+    const tracking = getFieldValue(report, ["tracking", "trackingNumber", "track", "Tracking Number"]).toString().trim().toLowerCase();
     return tracking === target;
   });
 }
@@ -207,9 +266,7 @@ async function handleTrackingSearch(event) {
   try {
     let reports = cachedReports;
     if (!Array.isArray(reports) || reports.length === 0) {
-      const response = await fetch(API_URL);
-      reports = await response.json();
-      cachedReports = Array.isArray(reports) ? reports : [];
+      reports = await fetchReports();
     }
 
     const matchedReport = findReportByTracking(cachedReports, trackingNumber);
@@ -395,9 +452,7 @@ function resetForm() {
 // Load existing reports
 async function loadReports() {
   try {
-    let response = await fetch(API_URL);
-    let reports = await response.json();
-    cachedReports = Array.isArray(reports) ? reports : [];
+    await fetchReports();
 
     cachedReports.forEach(r => {
       if (!r.lat || !r.lng) return;
@@ -410,6 +465,5 @@ async function loadReports() {
     console.log("Error loading reports", err);
   }
 }
-
 
 
